@@ -1,4 +1,4 @@
-package edu.csus.jhe2.GitOscar;
+package csc130s06.teamdeuxtwoto.gitoscar;
 
 public class Main
 {
