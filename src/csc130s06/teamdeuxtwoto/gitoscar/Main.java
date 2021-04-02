@@ -4,8 +4,8 @@ import csc130s06.teamdeuxtwoto.gitoscar.database.SQLite;
 
 public class Main
 {
-	// Change the file path to wherever you need the database file to be
-	private static String sqLiteFilePath = "E:/CSC131/GitOscar/sqlitedb/oscarworthymovies.db";
+	// Change the file path to wherever you have the database file
+	private static String sqLiteFilePath = "Insert your oscarworthymovies.db filepath here";
 	
 	private static SQLite sqlite;
 	public static SQLite getSQL() { return sqlite; }
