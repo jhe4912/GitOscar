@@ -5,7 +5,6 @@ import java.util.List;
 
 import csc130s06.teamdeuxtwoto.gitoscar.database.SQLHandler;
 import csc130s06.teamdeuxtwoto.gitoscar.database.SQL;
-import csc130s06.teamdeuxtwoto.gitoscar.database.SQL.Type;
 import csc130s06.teamdeuxtwoto.gitoscar.enums.AwardCategory;
 
 public class Main
@@ -27,7 +26,7 @@ public class Main
 	{
 		System.out.println("Program Started");
 		
-		SQL = new SQL(Type.SQLITE, SQLADDRESS);
+		SQL = new SQL(SQLADDRESS);
 		
 		// Following is sql test code. Will delete later.
 		try

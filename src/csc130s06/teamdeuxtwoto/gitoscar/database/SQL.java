@@ -8,28 +8,32 @@ import java.sql.SQLException;
 
 public class SQL
 {
-	public enum Type
+	enum Type
 	{
 		SQLITE, MYSQL
 	}
 	
+	private Type type = Type.SQLITE;
 	private String address = "";
+	private String user = "";
+	private String pass = "";
 	private Connection con;
 	
-	public SQL(Type type, String address)
+	public SQL(String address)
 	{
-		switch (type)
-		{
-			case MYSQL:
-				this.address = "jdbc:mysql://" + address;
-				System.out.println("Setting up MySQL database access.");
-				break;
-			
-			case SQLITE:
-				this.address = "jdbc:sqlite:" + address;
-				System.out.println("Setting up SQLite database access.");
-				break;
-		}
+		this.type = Type.SQLITE;
+		this.address = "jdbc:sqlite:" + address;
+		System.out.println("Setting up SQLite database access.");
+		connect();
+	}
+	
+	public SQL(String host, String port, String database, String user, String pass)
+	{
+		this.type = Type.MYSQL;
+		this.address = "jdbc:mysql://" + host + ":" + port + "/" + database + "?autoReconnect=true";
+		this.user = user;
+		this.pass = pass;
+		System.out.println("Setting up MySQL database access.");
 		connect();
 	}
 	
@@ -39,7 +43,16 @@ public class SQL
 	{
 		try
 		{
-			this.con = DriverManager.getConnection(address);
+			switch (type)
+			{
+				case MYSQL:
+					this.con = DriverManager.getConnection(address, user, pass);
+					break;
+					
+				case SQLITE:
+					this.con = DriverManager.getConnection(address);
+					break;
+			}
 			System.out.println("Connection to database has been made.");
 		}
 		catch (SQLException e)
@@ -111,7 +124,16 @@ public class SQL
 		
 		try
 		{
-			this.con = DriverManager.getConnection(address);
+			switch (type)
+			{
+				case MYSQL:
+					this.con = DriverManager.getConnection(address, user, pass);
+					break;
+					
+				case SQLITE:
+					this.con = DriverManager.getConnection(address);
+					break;
+			}
 		}
 		catch (SQLException e)
 		{
