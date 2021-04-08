@@ -6,14 +6,30 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SQLite
+public class SQL
 {
+	public enum Type
+	{
+		SQLITE, MYSQL
+	}
+	
 	private String address = "";
 	private Connection con;
 	
-	public SQLite(String filepath)
+	public SQL(Type type, String address)
 	{
-		this.address = "jdbc:sqlite:" + filepath;
+		switch (type)
+		{
+			case MYSQL:
+				this.address = "jdbc:mysql://" + address;
+				System.out.println("Setting up MySQL database access.");
+				break;
+			
+			case SQLITE:
+				this.address = "jdbc:sqlite:" + address;
+				System.out.println("Setting up SQLite database access.");
+				break;
+		}
 		connect();
 	}
 	
@@ -24,11 +40,11 @@ public class SQLite
 		try
 		{
 			this.con = DriverManager.getConnection(address);
-			System.out.println("Connection to SQLite database has been made.");
+			System.out.println("Connection to database has been made.");
 		}
 		catch (SQLException e)
 		{
-			System.out.println("Connection to SQLite database has not been made."
+			System.out.println("Connection to database has not been made."
 					+ " See following exception error.");
 			e.printStackTrace();
 		}
@@ -41,12 +57,12 @@ public class SQLite
 			if (this.con != null)
 			{
 				this.con.close();
-				System.out.println("Connection to SQLite database has ended.");
+				System.out.println("Connection to database has ended.");
 			}	
 		}
 		catch (SQLException e)
 		{
-			System.out.println("Connection to SQLite database couldn't be closed."
+			System.out.println("Connection to database couldn't be closed."
 					+ " See following exception error.");
 			e.printStackTrace();
 		}
