@@ -1,4 +1,4 @@
-package csc130s06.teamdeuxtwoto.gitoscar.database;
+package csus.csc131s06.teamdeuxtwoto.gitoscar.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package csc130s06.teamdeuxtwoto.gitoscar.enums;
+package csus.csc131s06.teamdeuxtwoto.gitoscar.enums;
 
 public enum AwardCategory 
 {

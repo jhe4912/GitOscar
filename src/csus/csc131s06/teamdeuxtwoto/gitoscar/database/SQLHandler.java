@@ -1,12 +1,12 @@
-package csc130s06.teamdeuxtwoto.gitoscar.database;
+package csus.csc131s06.teamdeuxtwoto.gitoscar.database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import csc130s06.teamdeuxtwoto.gitoscar.Main;
-import csc130s06.teamdeuxtwoto.gitoscar.enums.AwardCategory;
+import csus.csc131s06.teamdeuxtwoto.gitoscar.Main;
+import csus.csc131s06.teamdeuxtwoto.gitoscar.enums.AwardCategory;
 
 public class SQLHandler
 {
