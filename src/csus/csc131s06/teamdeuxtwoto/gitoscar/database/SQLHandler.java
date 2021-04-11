@@ -7,6 +7,7 @@ import java.util.List;
 
 import csus.csc131s06.teamdeuxtwoto.gitoscar.Main;
 import csus.csc131s06.teamdeuxtwoto.gitoscar.enums.AwardCategory;
+import csus.csc131s06.teamdeuxtwoto.gitoscar.objects.Nomination;
 
 public class SQLHandler
 {
@@ -23,52 +24,22 @@ public class SQLHandler
 	 *    winner (text)
 	 */
 	
-	
-	public List<String> getAllAwardsFromCeremonyNumber(int ceremony) throws SQLException
+	public List<Nomination> getAllAwardsFromCategory(AwardCategory cat) throws SQLException
 	{
 		SQL sql = Main.getSQL();
 		sql.refreshConnection();
 		
-		List<String> awardsAndInfo = new ArrayList<String>();
-		ResultSet rs = sql.query("SELECT * FROM oscars WHERE ceremony='" + ceremony + "'");
-		
-		while (rs.next())
-		{
-			awardsAndInfo.add(
-					"Film year: " + rs.getInt("yearFilm") + " - " +
-					"Ceremony year: " + rs.getInt("yearCeremony") + " - " +
-					"Ceremony number: " + rs.getInt("ceremony") + " - " +
-					"Category: " + rs.getString("category") + " - " +
-					"Name: " + rs.getString("name") + " - " +
-					"For film: " + rs.getString("film") + " - " +
-					"Winner: " + ((rs.getBoolean("winner")) ? "Yes" : "No"));
-		}
-		
-		return (!awardsAndInfo.isEmpty()) ? awardsAndInfo : null;
-	}
-	
-	public List<String> getAllAwardsFromCategory(AwardCategory cat) throws SQLException
-	{
-		SQL sql = Main.getSQL();
-		sql.refreshConnection();
-		
-		List<String> awardsAndInfo = new ArrayList<String>();
+		List<Nomination> awardNominations = new ArrayList<>();
 		ResultSet rs = sql.query("SELECT * FROM oscars WHERE category='" + cat.getSQLCatKey() + "'");
 		
 		while (rs.next())
 		{
-			awardsAndInfo.add(
-					"Film year: " + rs.getInt("yearFilm") + " - " +
-					"Ceremony year: " + rs.getInt("yearCeremony") + " - " +
-					"Ceremony number: " + rs.getInt("ceremony") + " - " +
-					"Category: " + rs.getString("category") + " - " +
-					"Name: " + rs.getString("name") + " - " +
-					"For film: " + rs.getString("film") + " - " +
-					"Winner: " + ((rs.getBoolean("winner")) ? "Yes" : "No"));
+			awardNominations.add(new Nomination(
+					rs.getInt("yearFilm"), rs.getInt("yearCeremony"), rs.getInt("ceremony"), 
+					rs.getString("category"), rs.getString("name"),	rs.getString("film"), 
+					rs.getBoolean("winner")));
 		}
 		
-		return (!awardsAndInfo.isEmpty()) ? awardsAndInfo : null;
+		return (!awardNominations.isEmpty()) ? awardNominations : null;
 	}
-	
-	
 }
