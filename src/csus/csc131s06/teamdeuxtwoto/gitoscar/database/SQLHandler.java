@@ -14,9 +14,9 @@ public class SQLHandler
 	 *  Database info:
 	 *  Table name = oscars
 	 *  Columns (data type): 
-	 *    yearFilm (text) (data type subject to change)
-	 *    yearCeremony (text) (data type subject to change)
-	 *    ceremony (text) (data type subject to change)
+	 *    yearFilm (int) (data type subject to change)
+	 *    yearCeremony (int) (data type subject to change)
+	 *    ceremony (int) (data type subject to change)
 	 *    category (text) 
 	 *    name (text)
 	 *    film (text)
@@ -35,9 +35,9 @@ public class SQLHandler
 		while (rs.next())
 		{
 			awardsAndInfo.add(
-					"Film year: " + rs.getString("yearFilm") + " - " +
-					"Ceremony year: " + rs.getString("yearCeremony") + " - " +
-					"Ceremony number: " + rs.getString("ceremony") + " - " +
+					"Film year: " + rs.getInt("yearFilm") + " - " +
+					"Ceremony year: " + rs.getInt("yearCeremony") + " - " +
+					"Ceremony number: " + rs.getInt("ceremony") + " - " +
 					"Category: " + rs.getString("category") + " - " +
 					"Name: " + rs.getString("name") + " - " +
 					"For film: " + rs.getString("film") + " - " +
@@ -58,9 +58,9 @@ public class SQLHandler
 		while (rs.next())
 		{
 			awardsAndInfo.add(
-					"Film year: " + rs.getString("yearFilm") + " - " +
-					"Ceremony year: " + rs.getString("yearCeremony") + " - " +
-					"Ceremony number: " + rs.getString("ceremony") + " - " +
+					"Film year: " + rs.getInt("yearFilm") + " - " +
+					"Ceremony year: " + rs.getInt("yearCeremony") + " - " +
+					"Ceremony number: " + rs.getInt("ceremony") + " - " +
 					"Category: " + rs.getString("category") + " - " +
 					"Name: " + rs.getString("name") + " - " +
 					"For film: " + rs.getString("film") + " - " +
