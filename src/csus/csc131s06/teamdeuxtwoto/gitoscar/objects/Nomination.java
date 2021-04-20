@@ -39,7 +39,7 @@ public class Nomination
 	public String print() { return "Film year: " + filmYear + " - " +
 			"Ceremony year: " + ceremonyYear + " - " +
 			"Ceremony number: " + ceremonyNumber + " - " +
-			"Category: " + awardCategory.getSQLCatKey() + " - " +
+			"Category: " + awardCategory.getPrint() + " - " +
 			"Awarded to: " + awardedTo + " - " +
 			"For film: " + filmName + " - " +
 			"Winner: " + ((isWinner) ? "Yes" : "No"); }
