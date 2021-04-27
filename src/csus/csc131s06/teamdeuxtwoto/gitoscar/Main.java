@@ -18,6 +18,7 @@ public class Main
 	private static SQL SQL;
 	public static SQL getSQL() { return SQL; }
 	
+	private static SQLHandler sqlHandler = new SQLHandler();
 	public static SQLHandler getSQLHandler() { return sqlHandler; }
 	
 	// Etc Things
