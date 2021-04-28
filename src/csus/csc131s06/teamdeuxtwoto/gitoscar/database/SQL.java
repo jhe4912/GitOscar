@@ -13,7 +13,7 @@ public class SQL
 		SQLITE, MYSQL
 	}
 	
-	private Type type = Type.SQLITE;
+	private Type type;
 	private String address = "";
 	private String user = "";
 	private String pass = "";
