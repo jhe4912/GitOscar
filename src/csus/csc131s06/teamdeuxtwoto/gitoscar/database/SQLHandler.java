@@ -48,18 +48,43 @@ public class SQLHandler
 	{
 		StringBuilder sb = new StringBuilder();
 		
-		if (searchQuery.getFilmYear() > 0)
-			sb.append(" yearFilm='" + searchQuery.getFilmYear() + "' AND");
+		if (searchQuery.getFilmYearStart() > 0 && searchQuery.getFilmYearEnd() > 0)
+		{
+			int start = searchQuery.getFilmYearStart();
+			int end = searchQuery.getFilmYearEnd();
+			
+			if (start > end)
+			{
+				int temp = start;
+				start = end;
+				end = temp;
+			}
+			
+			sb.append(" (yearFilm BETWEEN " + start + " AND " + end +") AND");
+		}
+		
 		if (searchQuery.getCeremonyYear() > 0)
 			sb.append(" yearCeremony='" + searchQuery.getCeremonyYear() + "' AND");
+		
 		if (searchQuery.getCeremonyNumber() > 0)
 			sb.append(" ceremony='" + searchQuery.getCeremonyNumber() + "' AND");
-		if (searchQuery.getAwardCategory() != null)
-			sb.append(" category='" + searchQuery.getAwardCategory().getSQLCatKey() + "' AND");
+		
+		if (!searchQuery.getAwardCategorys().isEmpty())
+		{
+			sb.append(" (");
+			for (AwardCategory ac : searchQuery.getAwardCategorys())
+				sb.append("category='" + ac.getSQLCatKey() + "' OR ");
+			sb.delete(sb.length() - 4, sb.length());
+			sb.append(") AND");
+		}
+			
+		
 		if (searchQuery.getAwardedTo() != null)
 			sb.append(" name='" + searchQuery.getAwardedTo() + "' AND");
+		
 		if (searchQuery.getFilmName() != null)
 			sb.append(" film='" + searchQuery.getFilmName() + "' AND");
+		
 		if (searchQuery.getResultsToInclude() != null)
 		{
 			switch (searchQuery.getResultsToInclude())
@@ -86,6 +111,7 @@ public class SQLHandler
 		
 		List<Nomination> awardNominations = new ArrayList<>();
 		ResultSet rs = sql.query("SELECT * FROM oscars WHERE" + sb.toString());
+		System.out.println("Query made to database: SELECT * FROM oscars WHERE" + sb.toString());
 		
 		while (rs.next())
 		{
