@@ -7,7 +7,7 @@ import csus.csc131s06.teamdeuxtwoto.gitoscar.database.SQL;
 public class Main
 {
 	// Change the file path to wherever you have the database file. Please don't change filename.
-	private static final String SQLADDRESS = "E:/CSC131/GitOscar/sqlitedb/oscarworthymovies.db";
+	private static final String SQLADDRESS = "Insert your filepath here.";
 	
 	// Database related things
 	private static SQL SQL;
