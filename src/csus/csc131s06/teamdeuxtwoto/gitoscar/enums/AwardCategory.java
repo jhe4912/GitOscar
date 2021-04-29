@@ -122,4 +122,24 @@ public enum AwardCategory
 	
 	public String getSQLCatKey() { return sqlCatKey; }
 	public String getPrint() { return print; }
+	
+	public static String[] getAllAwardPrint()
+	{
+		String[] awardsPrint = new String[AwardCategory.values().length];
+		int counter = 0;
+		for (AwardCategory a : AwardCategory.values())
+		{
+			awardsPrint[counter] = a.getPrint();
+			counter++;
+		}
+		
+		return awardsPrint;
+	}
+	
+	public static AwardCategory getAwardCategoryFromPrint(String print)
+	{
+		for (AwardCategory a : AwardCategory.values())
+			if (a.getPrint().equals(print)) return a;
+		return null;
+	}
 }
