@@ -73,7 +73,7 @@ public class GUI
 		filmYearPanel.setBorder(new TitledBorder(null, "Film Year", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		JPanel awardListPanel = new JPanel();
-		awardListPanel.setBorder(new TitledBorder(null, "Select Awards (Hold control (ctrl) to select multipl. Select none for all..)", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		awardListPanel.setBorder(new TitledBorder(null, "Select Awards (Hold control (ctrl) to select multiple. Select none for all.)", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		awardListPanel.setLayout(new CardLayout(0, 0));
 		
 		JButton resetButton = new JButton("Reset");
