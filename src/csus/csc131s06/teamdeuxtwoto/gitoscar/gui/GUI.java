@@ -4,13 +4,18 @@ import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+import javax.swing.event.HyperlinkEvent.EventType;
 
 import csus.csc131s06.teamdeuxtwoto.gitoscar.Main;
 import csus.csc131s06.teamdeuxtwoto.gitoscar.enums.AwardCategory;
 import csus.csc131s06.teamdeuxtwoto.gitoscar.objects.Nomination;
 import csus.csc131s06.teamdeuxtwoto.gitoscar.objects.SearchQuery;
+import csus.csc131s06.teamdeuxtwoto.gitoscar.util.MovieInfoFetcher;
 
 import java.awt.CardLayout;
+import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +35,7 @@ public class GUI
 	private JList<String> awardsList;
 	private JRadioButton bothRButton;
 	private JSpinner filmYearStartSpinner, filmYearEndSpinner;
-	private JTextArea resultsTextArea;
+	private JEditorPane resultsEditorPane;
 	
 	private JFrame currentFrame, searchFrame, resultsFrame;
 	private final ButtonGroup includeResultsBG = new ButtonGroup();
@@ -38,6 +43,7 @@ public class GUI
 	
 	public GUI()
 	{
+		
 		searchFrame();
 		resultFrame();
 		
@@ -47,6 +53,7 @@ public class GUI
 	
 	private void searchFrame()
 	{
+		
 		searchFrame = new JFrame("GitOscar - Search");
 		searchFrame.setSize(750, 550);
 		searchFrame.setLocationRelativeTo(null);
@@ -56,63 +63,64 @@ public class GUI
 			@Override
 			public void windowClosing(WindowEvent e)
 			{
+				
 				Main.end();
 			}
 		});
 		
-		JMenuBar menuBar = new JMenuBar();		
+		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(new JButton("Home"));
 		menuBar.add(new JButton("Search"));
-		menuBar.add(new JButton("About"));	
+		menuBar.add(new JButton("About"));
 		searchFrame.setJMenuBar(menuBar);
-				
+		
 		JPanel includeResultsPanel = new JPanel();
-		includeResultsPanel.setBorder(new TitledBorder(null, "Include Result", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		includeResultsPanel.setBorder(
+				new TitledBorder(null, "Include Result", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		JPanel filmYearPanel = new JPanel();
-		filmYearPanel.setBorder(new TitledBorder(null, "Film Year", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		filmYearPanel
+				.setBorder(new TitledBorder(null, "Film Year", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		JPanel awardListPanel = new JPanel();
-		awardListPanel.setBorder(new TitledBorder(null, "Select Awards (Hold control (ctrl) to select multiple. Select none for all.)", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		awardListPanel.setBorder(
+				new TitledBorder(null, "Select Awards (Hold control (ctrl) to select multiple. Select none for all.)",
+						TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		awardListPanel.setLayout(new CardLayout(0, 0));
 		
 		JButton resetButton = new JButton("Reset");
 		JButton searchButton = new JButton("Search");
 		
 		GroupLayout groupLayout = new GroupLayout(searchFrame.getContentPane());
-		groupLayout.setHorizontalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
-					.addGroup(groupLayout.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-							.addGroup(groupLayout.createSequentialGroup()
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap().addGroup(groupLayout
+						.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
 								.addComponent(filmYearPanel, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(ComponentPlacement.UNRELATED)
 								.addComponent(awardListPanel, GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
-							.addGroup(groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createSequentialGroup()
 								.addComponent(includeResultsPanel, GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(searchButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(resetButton, GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))))
+										.addComponent(searchButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(resetButton, GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))))
 						.addGap(8)));
-		groupLayout.setVerticalGroup(
-				groupLayout.createParallelGroup(Alignment.TRAILING)
-					.addGroup(groupLayout.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-							.addComponent(filmYearPanel, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
-							.addComponent(awardListPanel, GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-							.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(resetButton)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(searchButton)
-								.addGap(9))
-							.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(includeResultsPanel, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap()))));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
+				.createSequentialGroup().addContainerGap()
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(filmYearPanel, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
+						.addComponent(awardListPanel, GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup().addComponent(resetButton)
+								.addPreferredGap(ComponentPlacement.RELATED).addComponent(searchButton).addGap(9))
+						.addGroup(
+								groupLayout
+										.createSequentialGroup().addComponent(includeResultsPanel,
+												GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
+										.addContainerGap()))));
 		searchFrame.getContentPane().setLayout(groupLayout);
 		
 		awardListPanel.setLayout(new CardLayout(0, 0));
@@ -128,18 +136,13 @@ public class GUI
 		
 		JLabel filmYearStartLabel = new JLabel("Start");
 		filmYearStartSpinner = new JSpinner();
-		filmYearStartSpinner.setModel(new SpinnerNumberModel(
-				1927, 1927, 2019, 1));
-		filmYearStartSpinner.setEditor(
-				new JSpinner.NumberEditor(filmYearStartSpinner, "#"));
-		
+		filmYearStartSpinner.setModel(new SpinnerNumberModel(1927, 1927, 2019, 1));
+		filmYearStartSpinner.setEditor(new JSpinner.NumberEditor(filmYearStartSpinner, "#"));
 		
 		JLabel filmYearEndLabel = new JLabel("End");
 		filmYearEndSpinner = new JSpinner();
-		filmYearEndSpinner.setModel(new SpinnerNumberModel(
-				2019, 1927, 2019, 1));
-		filmYearEndSpinner.setEditor(
-				new JSpinner.NumberEditor(filmYearEndSpinner, "#"));
+		filmYearEndSpinner.setModel(new SpinnerNumberModel(2019, 1927, 2019, 1));
+		filmYearEndSpinner.setEditor(new JSpinner.NumberEditor(filmYearEndSpinner, "#"));
 		
 		filmYearPanel.setLayout(new BoxLayout(filmYearPanel, BoxLayout.Y_AXIS));
 		filmYearPanel.add(filmYearStartLabel);
@@ -164,8 +167,9 @@ public class GUI
 		nWinnerRButton.addActionListener(new ActionListener()
 		{
 			@Override
-			public void actionPerformed(ActionEvent event) 
+			public void actionPerformed(ActionEvent event)
 			{
+				
 				searchQuery.setSearchOnlyNonWinners();
 			}
 		});
@@ -173,8 +177,9 @@ public class GUI
 		winnerRButton.addActionListener(new ActionListener()
 		{
 			@Override
-			public void actionPerformed(ActionEvent event) 
+			public void actionPerformed(ActionEvent event)
 			{
+				
 				searchQuery.setSearchOnlyWinners();
 			}
 		});
@@ -182,26 +187,29 @@ public class GUI
 		bothRButton.addActionListener(new ActionListener()
 		{
 			@Override
-			public void actionPerformed(ActionEvent event) 
+			public void actionPerformed(ActionEvent event)
 			{
+				
 				searchQuery.setSearchBoth();
 			}
 		});
 		
 		resetButton.addActionListener(new ActionListener()
-		{	
+		{
 			@Override
 			public void actionPerformed(ActionEvent event)
 			{
+				
 				resetSearchFrame();
 			}
 		});
 		
 		searchButton.addActionListener(new ActionListener()
-		{	
+		{
 			@Override
 			public void actionPerformed(ActionEvent event)
 			{
+				
 				openResearchFrame();
 			}
 		});
@@ -209,6 +217,7 @@ public class GUI
 	
 	private void openSearchFrame()
 	{
+		
 		resetSearchFrame();
 		currentFrame.setVisible(false);
 		searchFrame.setVisible(true);
@@ -217,6 +226,7 @@ public class GUI
 	
 	private void resetSearchFrame()
 	{
+		
 		searchQuery.clear();
 		includeResultsBG.clearSelection();
 		bothRButton.setSelected(true);
@@ -227,6 +237,7 @@ public class GUI
 	
 	private void resultFrame()
 	{
+		
 		resultsFrame = new JFrame("GitOscar - Search Results");
 		resultsFrame.setSize(750, 550);
 		resultsFrame.setLocationRelativeTo(null);
@@ -236,6 +247,7 @@ public class GUI
 			@Override
 			public void windowClosing(WindowEvent e)
 			{
+				
 				Main.end();
 			}
 		});
@@ -251,46 +263,60 @@ public class GUI
 		
 		JButton newSearchButton = new JButton("New Search");
 		GroupLayout groupLayout = new GroupLayout(resultsFrame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(resultsPanel, GroupLayout.PREFERRED_SIZE, 733, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(622, Short.MAX_VALUE)
-					.addComponent(newSearchButton)
-					.addGap(23))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(resultsPanel, GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE).addGap(1))
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap(631, Short.MAX_VALUE)
+						.addComponent(newSearchButton).addGap(23)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(resultsPanel, GroupLayout.PREFERRED_SIZE, 447, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(newSearchButton)
-					.addContainerGap())
-		);
+						.addComponent(resultsPanel, GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+						.addPreferredGap(ComponentPlacement.RELATED).addComponent(newSearchButton).addGap(10)));
+		
 		resultsPanel.setLayout(new CardLayout(0, 0));
 		resultsFrame.getContentPane().setLayout(groupLayout);
 		
-		resultsTextArea = new JTextArea("No Results Found");
-		resultsTextArea.setEditable(false);
+		resultsEditorPane = new JEditorPane();
+		resultsEditorPane.setEditable(false);
+		resultsEditorPane.setContentType("text/html");
 		
 		JScrollPane resultsListScrollPane = new JScrollPane();
 		resultsPanel.add(resultsListScrollPane, "name_50183210810900");
-		resultsListScrollPane.setViewportView(resultsTextArea);
+		resultsListScrollPane.setViewportView(resultsEditorPane);
 		
 		newSearchButton.addActionListener(new ActionListener()
-		{	
+		{
 			@Override
 			public void actionPerformed(ActionEvent event)
 			{
+				
 				openSearchFrame();
+			}
+		});
+		
+		resultsEditorPane.addHyperlinkListener(new HyperlinkListener()
+		{
+			@Override
+			public void hyperlinkUpdate(HyperlinkEvent e)
+			{
+				if (e.getEventType() == EventType.ACTIVATED)
+				{
+					try
+					{
+						Desktop.getDesktop().browse(e.getURL().toURI());
+					} 
+					catch (Exception ex)
+					{
+						ex.printStackTrace();
+					}
+				}
 			}
 		});
 	}
 	
 	private void openResearchFrame()
 	{
+		
 		currentFrame.setVisible(false);
 		resultsFrame.setVisible(true);
 		currentFrame = resultsFrame;
@@ -298,10 +324,9 @@ public class GUI
 		if (!awardsList.getSelectedValuesList().isEmpty())
 		{
 			for (String s : awardsList.getSelectedValuesList())
-				if (AwardCategory.getAwardCategoryFromPrint(s) != null) 
+				if (AwardCategory.getAwardCategoryFromPrint(s) != null)
 					searchQuery.addAwardCategory(AwardCategory.getAwardCategoryFromPrint(s));
-		}
-		else
+		} else
 		{
 			for (AwardCategory a : AwardCategory.values())
 				searchQuery.addAwardCategory(a);
@@ -311,28 +336,32 @@ public class GUI
 		searchQuery.setFilmYearEnd((int) filmYearEndSpinner.getValue());
 		
 		try
-		{	
+		{
 			List<Nomination> nominations = Main.getSQLHandler().getAwardsFromSearchQuery(searchQuery);
 			
 			if (nominations != null)
 			{
-				resultsTextArea.setText("");
 				StringBuilder sb = new StringBuilder();
+				sb.append("<table> <tr><th><u>Film Year</u></th> <th><u>Ceremony Year</u></th> <th><u>Ceremony Number</u></th>  "
+						+ "<th><u>Category</u></th>  <th><u>Awarded To</u></th> <th><u>For film</u></th>  <th><u>Winner</u></th> </tr>");
 				
 				for (Nomination n : nominations)
-					sb.append(n.print() + "\n");
+				{
+					sb.append("<tr><th>" + n.getFilmYear() + "</th> <th>" + n.getCeremonyYear() + "</th> <th>" + n.getCeremonyNumber() + "</th>  "
+						+ "<th>" + n.getCategory().getPrint() + "</th>  <th>" + n.getAwardedTo() + "</th> <th>" + MovieInfoFetcher.getMovieHyperLink(n) + "</th> "
+						+ "<th>" + ((n.isWinner()) ? "Yes" : "No") + "</th> </tr>");
+				}
 				
-				sb.delete(sb.length() - 1, sb.length());
-				resultsTextArea.append(sb.toString());
-				resultsTextArea.setCaretPosition(0);
-			}
-			else
+				sb.append("</table>");
+				
+				resultsEditorPane.setText(sb.toString());
+				resultsEditorPane.setCaretPosition(0);
+			} else
 			{
-				resultsTextArea.setText("No Results Found.");
-				resultsTextArea.setCaretPosition(0);
+				resultsEditorPane.setText("No Results Found.");
+				resultsEditorPane.setCaretPosition(0);
 			}
-		} 
-		catch (SQLException e)
+		} catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
