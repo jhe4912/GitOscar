@@ -43,7 +43,6 @@ public class GUI
 	
 	public GUI()
 	{
-		
 		searchFrame();
 		resultFrame();
 		
@@ -53,7 +52,6 @@ public class GUI
 	
 	private void searchFrame()
 	{
-		
 		searchFrame = new JFrame("GitOscar - Search");
 		searchFrame.setSize(750, 550);
 		searchFrame.setLocationRelativeTo(null);
@@ -63,7 +61,6 @@ public class GUI
 			@Override
 			public void windowClosing(WindowEvent e)
 			{
-				
 				Main.end();
 			}
 		});
@@ -169,7 +166,6 @@ public class GUI
 			@Override
 			public void actionPerformed(ActionEvent event)
 			{
-				
 				searchQuery.setSearchOnlyNonWinners();
 			}
 		});
@@ -179,7 +175,6 @@ public class GUI
 			@Override
 			public void actionPerformed(ActionEvent event)
 			{
-				
 				searchQuery.setSearchOnlyWinners();
 			}
 		});
@@ -189,7 +184,6 @@ public class GUI
 			@Override
 			public void actionPerformed(ActionEvent event)
 			{
-				
 				searchQuery.setSearchBoth();
 			}
 		});
@@ -197,9 +191,8 @@ public class GUI
 		resetButton.addActionListener(new ActionListener()
 		{
 			@Override
-			public void actionPerformed(ActionEvent event)
-			{
-				
+			public void actionPerformed(ActionEvent event)	
+			{ 
 				resetSearchFrame();
 			}
 		});
@@ -207,9 +200,8 @@ public class GUI
 		searchButton.addActionListener(new ActionListener()
 		{
 			@Override
-			public void actionPerformed(ActionEvent event)
+			public void actionPerformed(ActionEvent event) 
 			{
-				
 				openResearchFrame();
 			}
 		});
@@ -217,7 +209,6 @@ public class GUI
 	
 	private void openSearchFrame()
 	{
-		
 		resetSearchFrame();
 		currentFrame.setVisible(false);
 		searchFrame.setVisible(true);
@@ -226,7 +217,6 @@ public class GUI
 	
 	private void resetSearchFrame()
 	{
-		
 		searchQuery.clear();
 		includeResultsBG.clearSelection();
 		bothRButton.setSelected(true);
@@ -236,8 +226,7 @@ public class GUI
 	}
 	
 	private void resultFrame()
-	{
-		
+	{		
 		resultsFrame = new JFrame("GitOscar - Search Results");
 		resultsFrame.setSize(750, 550);
 		resultsFrame.setLocationRelativeTo(null);
@@ -315,8 +304,7 @@ public class GUI
 	}
 	
 	private void openResearchFrame()
-	{
-		
+	{		
 		currentFrame.setVisible(false);
 		resultsFrame.setVisible(true);
 		currentFrame = resultsFrame;
