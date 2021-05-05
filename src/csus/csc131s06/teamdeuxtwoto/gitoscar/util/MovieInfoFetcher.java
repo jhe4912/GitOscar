@@ -11,4 +11,12 @@ public class MovieInfoFetcher
 		return "<a href=\"https://www.google.com/search?q=" + nomination.getFilmName().replace(" ", "+") 
 				+ "+" + nomination.getFilmYear() + "+film\">" + nomination.getFilmName() + "</a>";
 	}
+	
+	public static String getMovieLink(Nomination nomination)
+	{
+		if (nomination.getFilmName().equals("") || nomination.getFilmName().equals(" ")) 
+			return "";
+		return "https://www.google.com/search?q=" + nomination.getFilmName().replace(" ", "+") 
+				+ "+" + nomination.getFilmYear() + "+film";
+	}
 }

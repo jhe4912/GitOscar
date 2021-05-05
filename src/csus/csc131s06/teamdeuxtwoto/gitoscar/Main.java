@@ -2,6 +2,9 @@ package csus.csc131s06.teamdeuxtwoto.gitoscar;
 
 import csus.csc131s06.teamdeuxtwoto.gitoscar.database.SQLHandler;
 import csus.csc131s06.teamdeuxtwoto.gitoscar.gui.GUI;
+
+import java.util.Scanner;
+
 import csus.csc131s06.teamdeuxtwoto.gitoscar.database.SQL;
 
 public class Main
@@ -18,12 +21,32 @@ public class Main
 	
 	// Etc Things
 	
-	public static void main(String[] arg)
+	private static boolean openTestGUI = true;
+	
+	public static void main(String[] arg) 
 	{
 		System.out.println("Program Started");
 		
 		SQL = new SQL(SQLADDRESS);
-		new GUI();
+		
+		if (openTestGUI)
+		{
+			new GUI();
+		}
+		else
+		{
+			Scanner scanner = new Scanner(System.in);
+			String s = null;
+			
+			do
+			{
+				s = scanner.nextLine();
+			}
+			while (s == null || !s.equalsIgnoreCase("exit"));
+				
+			scanner.close();
+			end();
+		}
 	}
 	
 	public static void end()
