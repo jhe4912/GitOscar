@@ -14,7 +14,7 @@ public class Main
 	public static final String getSQLLiteAddress() { return SQLADDRESS; }
   
 	// Database related things
-	private static SQL SQL;
+	private static SQL SQL = null;
 	public static SQL getSQL() { return SQL; }
 	
 	private static SQLHandler sqlHandler = new SQLHandler();

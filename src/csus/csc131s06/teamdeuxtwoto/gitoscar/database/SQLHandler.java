@@ -17,6 +17,7 @@ public class SQLHandler
 	 *  Database info:
 	 *  Table name = oscars
 	 *  Columns (data type): 
+	 *    ID (int) (primary key btw)
 	 *    yearFilm (int)
 	 *    yearCeremony (int)
 	 *    ceremony (int) 
@@ -91,14 +92,17 @@ public class SQLHandler
 		boolean isRestAPIRequest = false;
 		
 		SQL sql = Main.getSQL();
-		if(sql == null) {
+    
+		if (sql == null)
+		{
 			isRestAPIRequest = true;
 			sql = new SQL(Main.getSQLLiteAddress());
-		}else {
-			sql.refreshConnection();
 		}
-		
-		
+		else
+		{
+			sql.refreshConnection();
+		}		
+    
 		List<Nomination> awardNominations = new ArrayList<>();
 		ResultSet rs = sql.query("SELECT * FROM oscars WHERE" + sb.toString());
 		System.out.println("Query made to database: SELECT * FROM oscars WHERE" + sb.toString());
@@ -106,13 +110,13 @@ public class SQLHandler
 		while (rs.next())
 		{
 			awardNominations.add(new Nomination( 
-					rs.getInt("ID"), rs.getInt("yearFilm"), rs.getInt("yearCeremony"), rs.getInt("ceremony"), 
+					rs.getInt("yearFilm"), rs.getInt("yearCeremony"), rs.getInt("ceremony"), 
 					rs.getString("category"), rs.getString("name"),	rs.getString("film"), 
 					rs.getBoolean("winner")));
 		}
 		
 		if (isRestAPIRequest) sql.close();
-		
+    
 		return (!awardNominations.isEmpty()) ? awardNominations : null;
 	}
 }

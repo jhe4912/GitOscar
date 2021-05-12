@@ -4,15 +4,14 @@ import csus.csc131s06.teamdeuxtwoto.gitoscar.enums.AwardCategory;
 
 public class Nomination
 {
-	private int nominationID, filmYear, ceremonyYear, ceremonyNumber;
+	private int filmYear, ceremonyYear, ceremonyNumber;
 	private AwardCategory awardCategory;
 	private String awardedTo, filmName;
 	private boolean isWinner;
 	
-	public Nomination(int nominationID, int filmYear, int ceremonyYear, int ceremontNumber,
+	public Nomination(int filmYear, int ceremonyYear, int ceremontNumber,
 			String category, String awardedTo, String filmName, boolean isWinner)
 	{
-		this.nominationID = nominationID;
 		this.filmYear = filmYear;
 		this.ceremonyYear = ceremonyYear;
 		this.ceremonyNumber = ceremontNumber;
@@ -30,7 +29,6 @@ public class Nomination
 		}
 	}
 	
-	public int getNominationID() { return nominationID; }	
 	public int getFilmYear() { return filmYear; }
 	public int getCeremonyYear() { return ceremonyYear; }
 	public int getCeremonyNumber() { return ceremonyNumber; }
