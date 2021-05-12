@@ -1,6 +1,7 @@
 package csus.csc131s06.teamdeuxtwoto.gitoscar.database;
 
 import java.sql.ResultSet;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,8 +88,16 @@ public class SQLHandler
 		if (sb.length() == 0) return null;
 		sb.delete(sb.length() - 4, sb.length());
 		
+		boolean isRestAPIRequest = false;
+		
 		SQL sql = Main.getSQL();
-		sql.refreshConnection();
+		if(sql == null) {
+			isRestAPIRequest = true;
+			sql = new SQL(Main.getSQLLiteAddress());
+		}else {
+			sql.refreshConnection();
+		}
+		
 		
 		List<Nomination> awardNominations = new ArrayList<>();
 		ResultSet rs = sql.query("SELECT * FROM oscars WHERE" + sb.toString());
@@ -101,6 +110,8 @@ public class SQLHandler
 					rs.getString("category"), rs.getString("name"),	rs.getString("film"), 
 					rs.getBoolean("winner")));
 		}
+		
+		if (isRestAPIRequest) sql.close();
 		
 		return (!awardNominations.isEmpty()) ? awardNominations : null;
 	}
