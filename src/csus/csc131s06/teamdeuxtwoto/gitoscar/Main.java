@@ -1,12 +1,8 @@
 package csus.csc131s06.teamdeuxtwoto.gitoscar;
 
 import csus.csc131s06.teamdeuxtwoto.gitoscar.database.SQLHandler;
-import csus.csc131s06.teamdeuxtwoto.gitoscar.gui.GUI;
-import csus.csc131s06.teamdeuxtwoto.gitoscar.objects.Nomination;
-import csus.csc131s06.teamdeuxtwoto.gitoscar.objects.SearchQuery;
 
-import java.sql.SQLException;
-import java.util.List;
+import csus.csc131s06.teamdeuxtwoto.gitoscar.gui.GUI;
 
 import csus.csc131s06.teamdeuxtwoto.gitoscar.database.SQL;
 
@@ -14,7 +10,7 @@ public class Main
 {
 	// Change the file path to wherever you have the database file. Please don't change filename.
 	private static final String SQLADDRESS = "C:\\Users\\yyyeeeaaahhh\\Documents\\Eclipse-Workspace\\GitOscar\\sqlitedb\\oscarworthymovies.db";
-	public static final String getSQLLiteAddress() { return SQLADDRESS;}
+	public final static String getSQLLiteAddress() { return SQLADDRESS; }
 	// Database related things
 	private static SQL SQL;
 	public static SQL getSQL() { return SQL; }

@@ -117,7 +117,6 @@ public class SQLHandler
 			sql.refreshConnection();
 		}
 		
-		
 		List<Nomination> awardNominations = new ArrayList<>();
 		ResultSet rs = sql.query("SELECT * FROM oscars WHERE" + sb.toString());
 		System.out.println("Query made to database: SELECT * FROM oscars WHERE" + sb.toString());
