@@ -8,32 +8,13 @@ import java.sql.SQLException;
 
 public class SQL
 {
-	enum Type
-	{
-		SQLITE, MYSQL
-	}
-	
-	private Type type;
 	private String address = "";
-	private String user = "";
-	private String pass = "";
 	private Connection con;
 	
-	public SQL(String address)
+	public SQL()
 	{
-		this.type = Type.SQLITE;
-		this.address = "jdbc:sqlite:" + address;
+		this.address = "jdbc:sqlite::resource:oscarworthymovies.db";
 		System.out.println("Setting up SQLite database access.");
-		connect();
-	}
-	
-	public SQL(String host, String port, String database, String user, String pass)
-	{
-		this.type = Type.MYSQL;
-		this.address = "jdbc:mysql://" + host + ":" + port + "/" + database + "?autoReconnect=true";
-		this.user = user;
-		this.pass = pass;
-		System.out.println("Setting up MySQL database access.");
 		connect();
 	}
 	
@@ -43,16 +24,7 @@ public class SQL
 	{
 		try
 		{
-			switch (type)
-			{
-				case MYSQL:
-					this.con = DriverManager.getConnection(address, user, pass);
-					break;
-					
-				case SQLITE:
-					this.con = DriverManager.getConnection(address);
-					break;
-			}
+			this.con = DriverManager.getConnection(address);
 			System.out.println("Connection to database has been made.");
 		}
 		catch (SQLException e)
