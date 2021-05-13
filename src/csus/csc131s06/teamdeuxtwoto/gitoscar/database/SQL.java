@@ -81,21 +81,6 @@ public class SQL
 		}
 	}
 	
-	public void update(String qry)
-	{
-		try
-		{
-			PreparedStatement st = this.con.prepareStatement(qry);
-			st.execute();
-			st.close();
-		}
-		catch (SQLException e)
-		{
-			connect();
-			e.printStackTrace();
-		}
-	}
-	
 	public ResultSet query(String qry)
 	{
 		ResultSet rs = null;
@@ -112,32 +97,5 @@ public class SQL
 		}
 		
 		return rs;
-	}
-	
-	public void refreshConnection()
-	{
-		try
-		{
-			if (this.con.isValid(1)) return;
-			this.con.close();
-		} catch (SQLException e) {}
-		
-		try
-		{
-			switch (type)
-			{
-				case MYSQL:
-					this.con = DriverManager.getConnection(address, user, pass);
-					break;
-					
-				case SQLITE:
-					this.con = DriverManager.getConnection(address);
-					break;
-			}
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
 	}
 }
