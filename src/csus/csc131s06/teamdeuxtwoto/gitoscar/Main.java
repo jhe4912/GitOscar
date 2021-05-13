@@ -1,9 +1,7 @@
 package csus.csc131s06.teamdeuxtwoto.gitoscar;
 
 import csus.csc131s06.teamdeuxtwoto.gitoscar.database.SQLHandler;
-
 import csus.csc131s06.teamdeuxtwoto.gitoscar.gui.GUI;
-
 import csus.csc131s06.teamdeuxtwoto.gitoscar.database.SQL;
 
 public class Main
