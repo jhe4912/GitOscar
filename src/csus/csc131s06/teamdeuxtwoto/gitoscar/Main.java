@@ -15,7 +15,7 @@ public class Main
 	
 	public static void main(String[] arg)
 	{
-		System.out.println("Program Started");
+		System.out.println("Main Program Started");
 
 		SQL = new SQL();
 		new GUI();
@@ -24,7 +24,7 @@ public class Main
 	public static void end()
 	{
 		SQL.close();
-		System.out.println("Program Ended");
+		System.out.println("Main Program Ended");
 		System.exit(0);
 	}
 }
