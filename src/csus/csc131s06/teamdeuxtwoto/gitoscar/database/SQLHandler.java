@@ -26,25 +26,6 @@ public class SQLHandler
 	 *    winner (text)
 	 */
 	
-	public List<Nomination> getAllAwardsFromCategory(AwardCategory cat) throws SQLException
-	{
-		SQL sql = Main.getSQL();
-		sql.refreshConnection();
-		
-		List<Nomination> awardNominations = new ArrayList<>();
-		ResultSet rs = sql.query("SELECT * FROM oscars WHERE category='" + cat.getSQLCatKey() + "'");
-		
-		while (rs.next())
-		{
-			awardNominations.add(new Nomination(
-					rs.getInt("yearFilm"), rs.getInt("yearCeremony"), rs.getInt("ceremony"), 
-					rs.getString("category"), rs.getString("name"),	rs.getString("film"), 
-					rs.getBoolean("winner")));
-		}
-		
-		return (!awardNominations.isEmpty()) ? awardNominations : null;
-	}
-	
 	public List<Nomination> getAwardsFromSearchQuery(SearchQuery searchQuery) throws SQLException
 	{
 		StringBuilder sb = new StringBuilder();
@@ -123,8 +104,8 @@ public class SQLHandler
 		
 		while (rs.next())
 		{
-			awardNominations.add(new Nomination(
-					rs.getInt("yearFilm"), rs.getInt("yearCeremony"), rs.getInt("ceremony"), 
+			awardNominations.add(new Nomination( 
+					rs.getInt("ID"), rs.getInt("yearFilm"), rs.getInt("yearCeremony"), rs.getInt("ceremony"), 
 					rs.getString("category"), rs.getString("name"),	rs.getString("film"), 
 					rs.getBoolean("winner")));
 		}
