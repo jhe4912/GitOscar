@@ -123,18 +123,18 @@ public class WebController {
 		help.add("/movies:");
 		help.add("* All /movies search filters can be used at once to produce results.");
 		help.add("Possible /movies search filters: ?movieName= , ?yearStart= , ?yearEnd=, ?actor=");
-		help.add("   /movies Seach example 1:   /movies?yearStart=1990&yearEnd=2005");
-		help.add("   /movies Seach example 2:   /movies?actor=Tom Hanks");
-		help.add("   /movies Seach example 2:   /movies - (Returns all movies)");
+		help.add("   /movies Search example 1:   /movies?yearStart=1990&yearEnd=2005");
+		help.add("   /movies Search example 2:   /movies?actor=Tom Hanks");
+		help.add("   /movies Search example 2:   /movies - (Returns all movies)");
 		help.add("");
 		help.add("/categories");
-		help.add("* Only one /categories search filters can be used at once to produce results.");
+		help.add("* Only one /categories search filter can be used at once to produce results.");
 		help.add("Possible /categories search filters: ?cat=");
 		help.add("* ?cat= is sensitive to blank spaces - i.e. cannot use \"Visual Effects\" must be \"VISUAL_EFFECTS\".");
 		help.add("* use /categories to decide which exact values to use as a filter");
-		help.add("   /categories Seach example 1:   /categories?cat=BEST_PICTURE");
-		help.add("   /categories Seach example 2:   /categories?cat=Actor");
-		help.add("   /categories Seach example 3:   /categories - (Returns all categories)");
+		help.add("   /categories Search example 1:   /categories?cat=BEST_PICTURE");
+		help.add("   /categories Search example 2:   /categories?cat=Actor");
+		help.add("   /categories Search example 3:   /categories - (Returns all categories)");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(help);
 	}
