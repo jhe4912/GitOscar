@@ -4,8 +4,6 @@ import csus.csc131s06.teamdeuxtwoto.gitoscar.database.SQLHandler;
 
 import csus.csc131s06.teamdeuxtwoto.gitoscar.gui.GUI;
 
-import java.util.Scanner;
-
 import csus.csc131s06.teamdeuxtwoto.gitoscar.database.SQL;
 
 public class Main
@@ -17,35 +15,12 @@ public class Main
 	private static SQLHandler sqlHandler = new SQLHandler();
 	public static SQLHandler getSQLHandler() { return sqlHandler; }
 	
-	// Etc Things
-	private static boolean openGUI = true;
-	
 	public static void main(String[] arg)
 	{
 		System.out.println("Program Started");
 
 		SQL = new SQL();
-
-		if (openGUI)
-		{
-			new GUI();
-		}
-		else
-		{
-			Scanner scanner = new Scanner(System.in);
-			String s = null;
-			
-			System.out.println("To exit out of program. Type \"Exit\".");
-			
-			do
-			{
-				s = scanner.nextLine();
-			}
-			while (s == null || !s.equalsIgnoreCase("exit"));
-
-			scanner.close();
-			end();
-		}
+		new GUI();
 	}
 	
 	public static void end()
