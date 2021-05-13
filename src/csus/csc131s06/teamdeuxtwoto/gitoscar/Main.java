@@ -4,28 +4,52 @@ import csus.csc131s06.teamdeuxtwoto.gitoscar.database.SQLHandler;
 
 import csus.csc131s06.teamdeuxtwoto.gitoscar.gui.GUI;
 
+import java.util.Scanner;
+
 import csus.csc131s06.teamdeuxtwoto.gitoscar.database.SQL;
 
 public class Main
 {
 	// Change the file path to wherever you have the database file. Please don't change filename.
-	private static final String SQLADDRESS = "C:\\Users\\yyyeeeaaahhh\\Documents\\Eclipse-Workspace\\GitOscar\\sqlitedb\\oscarworthymovies.db";
+	private final static String SQLADDRESS = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().replace("/bin/", "/sqlitedb/oscarworthymovies.db");
 	public final static String getSQLLiteAddress() { return SQLADDRESS; }
+	
 	// Database related things
-	private static SQL SQL = null;
+	private static SQL SQL;
 	public static SQL getSQL() { return SQL; }
 	
 	private static SQLHandler sqlHandler = new SQLHandler();
 	public static SQLHandler getSQLHandler() { return sqlHandler; }
 	
 	// Etc Things
+	private static boolean openTestGUI = true;
 	
 	public static void main(String[] arg)
 	{
 		System.out.println("Program Started");
-		
+
 		SQL = new SQL(SQLADDRESS);
-		new GUI();
+
+		if (openTestGUI)
+		{
+			new GUI();
+		}
+		else
+		{
+			Scanner scanner = new Scanner(System.in);
+			String s = null;
+			
+			System.out.println("To exit out of program. Type \"Exit\".");
+			
+			do
+			{
+				s = scanner.nextLine();
+			}
+			while (s == null || !s.equalsIgnoreCase("exit"));
+
+			scanner.close();
+			end();
+		}
 	}
 	
 	public static void end()
