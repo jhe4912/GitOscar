@@ -12,7 +12,7 @@ public class Main
 	private static final String SQLADDRESS = "C:\\Users\\yyyeeeaaahhh\\Documents\\Eclipse-Workspace\\GitOscar\\sqlitedb\\oscarworthymovies.db";
 	public final static String getSQLLiteAddress() { return SQLADDRESS; }
 	// Database related things
-	private static SQL SQL;
+	private static SQL SQL = null;
 	public static SQL getSQL() { return SQL; }
 	
 	private static SQLHandler sqlHandler = new SQLHandler();
