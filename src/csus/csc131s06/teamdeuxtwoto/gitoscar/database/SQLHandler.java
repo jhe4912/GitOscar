@@ -98,10 +98,6 @@ public class SQLHandler
 			isRestAPIRequest = true;
 			sql = new SQL(Main.getSQLLiteAddress());
 		}
-		else
-		{
-			sql.refreshConnection();
-		}		
     
 		List<Nomination> awardNominations = new ArrayList<>();
 		ResultSet rs = sql.query("SELECT * FROM oscars WHERE" + sb.toString());

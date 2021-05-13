@@ -1,12 +1,14 @@
 package com.springboot.app;
 
 import java.sql.SQLException;
-
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import csus.csc131s06.teamdeuxtwoto.gitoscar.Main;
 import csus.csc131s06.teamdeuxtwoto.gitoscar.enums.AwardCategory;
@@ -14,9 +16,10 @@ import csus.csc131s06.teamdeuxtwoto.gitoscar.objects.Nomination;
 import csus.csc131s06.teamdeuxtwoto.gitoscar.objects.SearchQuery;
 
 @RestController
+@RequestMapping(value = "/")
 public class WebController {
 	
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "/home")
 	public ResponseEntity<String[]> HomePrompt(){
 		String[] message = new String[9];
 		message[0] = "Search for your favorite oscar nominated movies!";

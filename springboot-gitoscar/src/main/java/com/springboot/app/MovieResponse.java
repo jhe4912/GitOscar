@@ -1,4 +1,4 @@
-package main.java.com.springboot.app;
+package com.springboot.app;
 
 public class MovieResponse {
 	
