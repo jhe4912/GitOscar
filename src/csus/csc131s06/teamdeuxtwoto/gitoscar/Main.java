@@ -11,7 +11,7 @@ import csus.csc131s06.teamdeuxtwoto.gitoscar.database.SQL;
 public class Main
 {
 	// Change the file path to wherever you have the database file. Please don't change filename.
-	private final static String SQLADDRESS = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().replace("/bin/", "/bin/sqlitedb/oscarworthymovies.db");
+	private final static String SQLADDRESS = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().replace("/bin/", "/bin/csus/csc131s06/teamdeuxtwoto/gitoscar/database/oscarworthymovies.db");
 	public final static String getSQLLiteAddress() { return SQLADDRESS; }
 	
 	// Database related things
