@@ -96,7 +96,7 @@ public class SQLHandler
 		if (sql == null)
 		{
 			isRestAPIRequest = true;
-			sql = new SQL(Main.getSQLLiteAddress());
+			sql = new SQL();
 		}
     
 		List<Nomination> awardNominations = new ArrayList<>();
