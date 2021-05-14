@@ -2,7 +2,6 @@ package com.springboot.app;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -64,7 +63,7 @@ public class WebController {
 		try {
 			List<Nomination> nominations = Main.getSQLHandler().getAwardsFromSearchQuery(sq);
 
-			if (nominations != null || nominations.isEmpty()) {
+			if (nominations != null) {
 				MovieResponse[] response = new MovieResponse[nominations.size()];
 				response = setMovieResponseObjectFields(response, nominations);
 				return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -87,37 +86,34 @@ public class WebController {
 	        
 	        for (AwardCategory a : AwardCategory.values())
 	        {
-	            if (a.name().equalsIgnoreCase(category))
+	            if (a.toString().equalsIgnoreCase(category))
 	            {
 	                isAwardCategory = true;
 	                break;
 	            }
 	        }
-			
-			if(!isAwardCategory) {
-				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-			}
+	        
+	        if(!isAwardCategory) {
+	        	return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	        }
 			
 			AwardCategory ac = AwardCategory.valueOf(category.toUpperCase());
 
 			if (ac != null) {
 				SearchQuery sq = new SearchQuery();
 				sq.addAwardCategory(ac);
-				
+
 				try {
 					List<Nomination> nominations = Main.getSQLHandler().getAwardsFromSearchQuery(sq);
-					
-					if(nominations != null || nominations.isEmpty()) {
-						MovieResponse[] response = new MovieResponse[nominations.size()];
-						response = setMovieResponseObjectFields(response, nominations);
-						return ResponseEntity.status(HttpStatus.OK).body(response);
-					}
+					MovieResponse[] response = new MovieResponse[nominations.size()];
+
+					response = setMovieResponseObjectFields(response, nominations);
+					return ResponseEntity.status(HttpStatus.OK).body(response);
+
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}else {
-				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 			}
 		} else {
 			AwardCategory[] ac = new AwardCategory[AwardCategory.values().length];
