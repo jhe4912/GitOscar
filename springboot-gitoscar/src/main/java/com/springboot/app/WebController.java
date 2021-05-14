@@ -81,6 +81,22 @@ public class WebController {
 			@RequestParam(value = "cat", defaultValue = "", required = false) String category) {
 		
 		if (!category.isEmpty()) {
+			
+			boolean isAwardCategory = false;
+	        
+	        for (AwardCategory a : AwardCategory.values())
+	        {
+	            if (a.toString().equalsIgnoreCase(category))
+	            {
+	                isAwardCategory = true;
+	                break;
+	            }
+	        }
+	        
+	        if(!isAwardCategory) {
+	        	return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	        }
+			
 			AwardCategory ac = AwardCategory.valueOf(category.toUpperCase());
 
 			if (ac != null) {
