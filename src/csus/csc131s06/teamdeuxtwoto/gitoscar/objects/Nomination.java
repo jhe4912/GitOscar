@@ -9,7 +9,7 @@ public class Nomination
 	private String awardedTo, filmName;
 	private boolean isWinner;
 	
-	public Nomination(int filmYear, int ceremonyYear, int ceremontNumber, 
+	public Nomination(int filmYear, int ceremonyYear, int ceremontNumber,
 			String category, String awardedTo, String filmName, boolean isWinner)
 	{
 		this.filmYear = filmYear;

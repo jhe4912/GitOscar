@@ -1,6 +1,7 @@
 package csus.csc131s06.teamdeuxtwoto.gitoscar.database;
 
 import java.sql.ResultSet;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class SQLHandler
 	 *  Database info:
 	 *  Table name = oscars
 	 *  Columns (data type): 
+	 *    ID (int) (primary key btw)
 	 *    yearFilm (int)
 	 *    yearCeremony (int)
 	 *    ceremony (int) 
@@ -24,25 +26,6 @@ public class SQLHandler
 	 *    film (text)
 	 *    winner (text)
 	 */
-	
-	public List<Nomination> getAllAwardsFromCategory(AwardCategory cat) throws SQLException
-	{
-		SQL sql = Main.getSQL();
-		sql.refreshConnection();
-		
-		List<Nomination> awardNominations = new ArrayList<>();
-		ResultSet rs = sql.query("SELECT * FROM oscars WHERE category='" + cat.getSQLCatKey() + "'");
-		
-		while (rs.next())
-		{
-			awardNominations.add(new Nomination(
-					rs.getInt("yearFilm"), rs.getInt("yearCeremony"), rs.getInt("ceremony"), 
-					rs.getString("category"), rs.getString("name"),	rs.getString("film"), 
-					rs.getBoolean("winner")));
-		}
-		
-		return (!awardNominations.isEmpty()) ? awardNominations : null;
-	}
 	
 	public List<Nomination> getAwardsFromSearchQuery(SearchQuery searchQuery) throws SQLException
 	{
@@ -106,21 +89,30 @@ public class SQLHandler
 		if (sb.length() == 0) return null;
 		sb.delete(sb.length() - 4, sb.length());
 		
-		SQL sql = Main.getSQL();
-		sql.refreshConnection();
+		boolean isRestAPIRequest = false;
 		
+		SQL sql = Main.getSQL();
+    
+		if (sql == null)
+		{
+			isRestAPIRequest = true;
+			sql = new SQL();
+		}
+    
 		List<Nomination> awardNominations = new ArrayList<>();
 		ResultSet rs = sql.query("SELECT * FROM oscars WHERE" + sb.toString());
 		System.out.println("Query made to database: SELECT * FROM oscars WHERE" + sb.toString());
 		
 		while (rs.next())
 		{
-			awardNominations.add(new Nomination(
+			awardNominations.add(new Nomination( 
 					rs.getInt("yearFilm"), rs.getInt("yearCeremony"), rs.getInt("ceremony"), 
 					rs.getString("category"), rs.getString("name"),	rs.getString("film"), 
 					rs.getBoolean("winner")));
 		}
 		
+		if (isRestAPIRequest) sql.close();
+    
 		return (!awardNominations.isEmpty()) ? awardNominations : null;
 	}
 }
